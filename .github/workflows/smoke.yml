@@ -1,0 +1,33 @@
+name: Smoke test
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [
+            ubuntu-latest,
+            ubuntu-24.04-arm,
+            macOS-latest,
+            macos-15-intel,
+            windows-latest,
+          ]
+        node-version: [24]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm ci --no-audit
+
+      - run: node test.js
