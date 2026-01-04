@@ -7,3 +7,9 @@ const ptyProcess = process.platform === "win32"
 ptyProcess.onData((data) => {
   process.stdout.write(data);
 });
+
+ptyProcess.onExit(({ exitCode: actualExitCode, signal }) => {
+  const exitCode =
+    signal === undefined || signal === 0 ? actualExitCode : 128 + signal;
+  process.exit(exitCode);
+})
