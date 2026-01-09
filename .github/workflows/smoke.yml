@@ -33,4 +33,6 @@ jobs:
 
       - run: node -p "[process.platform, process.arch]"
 
-      - run: node test.js
+      - run: node test-node-pty.js
+
+      - run: node test-lydell-node-pty.js
